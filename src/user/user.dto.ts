@@ -23,3 +23,21 @@ export class UpdateUserDto {
   @IsNotEmpty()
   password: string;
 }
+
+export class CreatePresetDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  mode: string;
+
+  @IsString()
+  @IsNotEmpty()
+  muscle: string;
+
+  @IsString()
+  @IsNotEmpty()
+  optimization: string;
+}

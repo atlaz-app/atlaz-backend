@@ -17,4 +17,20 @@ model User {
   refreshToken     String?  @map("refresh_token")
   verificationCode String?  @map("verification_code")
   isEmailVerified  Boolean  @map("is_email_verified") @default(false)
+  presets          Preset[]
+}
+
+model Preset {
+  id           Int     @id @default(autoincrement())
+  name         String
+  mode         String
+  muscle       String
+  optimization String
+  userId       Int
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+  @@unique([userId, name])
 }

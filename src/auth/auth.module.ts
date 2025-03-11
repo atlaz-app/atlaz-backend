@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { UsersModule } from '../users/users.module';
+import { UserModule } from '../user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
@@ -13,7 +13,7 @@ import { MailModule } from 'src/mail/mail.module';
 
 @Module({
   imports: [
-    UsersModule,
+    UserModule,
     PassportModule,
     MailModule,
     JwtModule.register({

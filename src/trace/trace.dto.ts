@@ -27,19 +27,15 @@ export class CreateTraceDto {
   @IsNumber()
   effectiveness: number;
 
-  @IsNumber()
-  @IsOptional()
-  peakIntensity?: number;
-
-  @IsNumber()
-  @IsOptional()
-  avgIntensity?: number;
-
   @IsOptional()
   envelopeData?: number[];
 
   @IsOptional()
   repPeaks?: number[];
+
+  @IsInt()
+  @IsOptional()
+  duration?: number;
 
   @IsString()
   @IsOptional()

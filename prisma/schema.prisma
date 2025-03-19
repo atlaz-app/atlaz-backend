@@ -61,17 +61,17 @@ model Trace {
 }
 
 enum TrackerMuscle {
-  BICEPS
-  TRICEPS
-  DELTOID
+  Biceps
+  Triceps
+  Deltoid
 }
 
 enum TrackerMode {
-  HYPERTROPHY
-  STRENGTH
+  Hypertrophy
+  Strength
 }
 
 enum TrackerVisual {
-  ON
-  OFF
+  On
+  Off
 }

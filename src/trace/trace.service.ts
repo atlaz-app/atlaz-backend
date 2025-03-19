@@ -9,17 +9,14 @@ export class TraceService {
   constructor(private prisma: PrismaService) {}
 
   async createTrace(userId: number, dto: CreateTraceDto, videoPath?: string) {
-    const duration = dto.envelopeData ? Math.round(dto.envelopeData.length / 20) : null;
-    const peak = dto.envelopeData ? Math.max(...dto.envelopeData) : dto.peakIntensity;
-    const avg = dto.envelopeData
-      ? dto.envelopeData.reduce((a, b) => a + b, 0) / dto.envelopeData.length
-      : dto.avgIntensity;
+    const peak = Math.max(...dto.envelopeData);
+    const avg = dto.envelopeData.reduce((a, b) => a + b, 0) / dto.envelopeData.length;
 
     return this.prisma.trace.create({
       data: {
         user: { connect: { id: userId } },
         preset: dto.presetId ? { connect: { id: dto.presetId } } : undefined,
-        duration,
+        duration: dto.duration,
         muscle: dto.muscle,
         mode: dto.mode,
         visual: dto.visual,

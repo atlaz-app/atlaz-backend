@@ -1,15 +1,15 @@
 export enum TrackerMuscle {
-  Biceps = 'BICEPS',
-  Triceps = 'TRICEPS',
-  Deltoid = 'DELTOID',
+  Biceps = 'Biceps',
+  Triceps = 'Triceps',
+  Deltoid = 'Deltoid',
 }
 
 export enum TrackerMode {
-  Hypertrophy = 'HYPERTROPHY',
-  Strength = 'STRENGTH',
+  Hypertrophy = 'Hypertrophy',
+  Strength = 'Strength',
 }
 
 export enum TrackerVisual {
-  On = 'ON',
-  Off = 'OFF',
+  On = 'On',
+  Off = 'Off',
 }

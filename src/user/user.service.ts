@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreatePresetDto } from './user.dto';
 
 @Injectable()
 export class UserService {
@@ -99,31 +98,5 @@ export class UserService {
 
   async deleteById(id: number) {
     await this.prisma.user.delete({ where: { id } });
-  }
-
-  async getPresets(userId: number) {
-    return this.prisma.preset.findMany({ where: { userId } });
-  }
-
-  async createPreset(userId: number, preset: CreatePresetDto) {
-    await this.prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        presets: {
-          create: preset,
-        },
-      },
-      include: {
-        presets: true,
-      },
-    });
-
-    return this.prisma.preset.findMany({ where: { userId } });
-  }
-
-  async deletePreset(userId: number, presetId: number) {
-    return this.prisma.preset.delete({ where: { id: presetId, userId } });
   }
 }

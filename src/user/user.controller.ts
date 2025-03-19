@@ -1,17 +1,8 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Delete,
-  Req,
-  Param,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Delete, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { AiService } from 'src/ai/ai.service';
-import { CreatePresetDto, UpdateUserDto } from './user.dto';
+import { UpdateUserDto } from './user.dto';
 import { Request } from 'express';
 
 @Controller('user')
@@ -34,25 +25,6 @@ export class UserController {
   @Delete()
   deleteUser(@Req() req: Request) {
     return this.usersService.remove(req.user.id);
-  }
-
-  @Get('presets')
-  async getPresets(@Req() req: Request) {
-    return this.usersService.getPresets(req.user.id);
-  }
-
-  @Post('presets')
-  async createPreset(
-    @Req() req: Request,
-    @Body() createPresetDto: CreatePresetDto,
-  ) {
-    return this.usersService.createPreset(req.user.id, createPresetDto);
-  }
-
-  @Delete('presets/:id')
-  async deletePreset(@Req() req: Request, @Param('id') id: string) {
-    console.log(id);
-    return this.usersService.deletePreset(req.user.id, +id);
   }
 
   @Public()

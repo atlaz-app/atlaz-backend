@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  BadRequestException,
-  ForbiddenException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, BadRequestException, ForbiddenException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
@@ -18,22 +13,13 @@ export class AuthService {
     private mailService: MailService,
   ) {}
 
-  async validateLogin({
-    email,
-    enteredPassword,
-  }: {
-    email: string;
-    enteredPassword: string;
-  }) {
+  async validateLogin({ email, enteredPassword }: { email: string; enteredPassword: string }) {
     const user = await this.userService.findByVerifiedEmail(email);
     if (!user) {
       throw new UnauthorizedException('User does not exist!');
     }
 
-    const passwordMatches = await bcrypt.compare(
-      enteredPassword,
-      user.password,
-    );
+    const passwordMatches = await bcrypt.compare(enteredPassword, user.password);
     if (!passwordMatches) return null;
 
     return user;
@@ -67,9 +53,7 @@ export class AuthService {
     experienceYears?: number;
     password: string;
   }) {
-    const existingUser = await this.userService.findByEmail(
-      registrationData.email,
-    );
+    const existingUser = await this.userService.findByEmail(registrationData.email);
     if (existingUser && existingUser.isEmailVerified) {
       throw new BadRequestException('Email is already in use');
     }
@@ -99,16 +83,9 @@ export class AuthService {
     return this.login(newUser);
   }
 
-  async refreshTokens({
-    userId,
-    refreshToken,
-  }: {
-    userId: number;
-    refreshToken: string;
-  }) {
+  async refreshTokens({ userId, refreshToken }: { userId: number; refreshToken: string }) {
     const user = await this.userService.findOne(userId);
-    if (!user || !user.refreshToken)
-      throw new ForbiddenException('Access Denied');
+    if (!user || !user.refreshToken) throw new ForbiddenException('Access Denied');
 
     const rtMatches = await bcrypt.compare(refreshToken, user.refreshToken);
     if (!rtMatches) throw new ForbiddenException('Access Denied');

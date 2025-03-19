@@ -8,29 +8,70 @@ datasource db {
 }
 
 model User {
-  id               Int     @id @default(autoincrement())
+  id               Int       @id @default(autoincrement())
   username         String?
-  email            String  @unique
+  email            String    @unique
   age              Int?
-  experienceYears  Int?    @map("experience_years")
+  experienceYears  Int?      @map("experience_years")
   password         String
-  refreshToken     String?  @map("refresh_token")
-  verificationCode String?  @map("verification_code")
-  isEmailVerified  Boolean  @map("is_email_verified") @default(false)
-  presets          Preset[]
+  refreshToken     String?   @map("refresh_token")
+  verificationCode String?   @map("verification_code")
+  isEmailVerified  Boolean   @map("is_email_verified") @default(false)
+  presets          Preset[]  
+  traces           Trace[]   
 }
 
 model Preset {
-  id           Int     @id @default(autoincrement())
-  name         String
-  mode         String
-  muscle       String
-  optimization String
+  id           Int           @id @default(autoincrement())
+  name         String?
+  muscle       TrackerMuscle
+  mode         TrackerMode
+  visual       TrackerVisual
   userId       Int
-  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  traces       Trace[]   
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
   @@index([userId])
   @@unique([userId, name])
+}
+
+model Trace {
+  id            Int           @id @default(autoincrement())
+  userId        Int           @map("user_id")
+  presetId      Int?          @map("preset_id")
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  preset        Preset?       @relation(fields: [presetId], references: [id], onDelete: SetNull)
+  duration      Int?          @map("duration")
+  muscle        TrackerMuscle 
+  mode          TrackerMode   
+  visual        TrackerVisual 
+  videoPath     String?       @map("video_path")
+  totalReps     Int           @default(0) @map("total_reps")
+  effectiveReps Int           @default(0) @map("effective_reps")
+  effectiveness Float         @default(0.0) @map("effectiveness")
+  peakIntensity Float?        @map("peak_intensity")
+  avgIntensity  Float?        @map("avg_intensity")
+  envelopeData  Json?         @map("envelope_data")
+  repPeaks      Json?         @map("rep_peaks")
+  notes         String?
+  createdAt     DateTime      @default(now()) @map("created_at")
+  @@index([userId])
+  @@index([presetId])
+}
+
+enum TrackerMuscle {
+  BICEPS
+  TRICEPS
+  DELTOID
+}
+
+enum TrackerMode {
+  HYPERTROPHY
+  STRENGTH
+}
+
+enum TrackerVisual {
+  ON
+  OFF
 }

@@ -7,9 +7,13 @@ import { AiModule } from './ai/ai.module';
 import { MailModule } from './mail/mail.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
+import { TraceModule } from './trace/trace.module';
+import { PresetModule } from './preset/preset.module';
 
 @Module({
   imports: [
+    TraceModule,
+    PresetModule,
     UserModule,
     AuthModule,
     AiModule,

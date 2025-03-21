@@ -42,7 +42,7 @@ model Trace {
   presetId      Int?          @map("preset_id")
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   preset        Preset?       @relation(fields: [presetId], references: [id], onDelete: SetNull)
-  duration      Int?          @map("duration")
+  duration      Int           @map("duration")
   muscle        TrackerMuscle 
   mode          TrackerMode   
   visual        TrackerVisual 
@@ -52,8 +52,9 @@ model Trace {
   effectiveness Float         @default(0.0) @map("effectiveness")
   peakIntensity Float?        @map("peak_intensity")
   avgIntensity  Float?        @map("avg_intensity")
-  envelopeData  Json?         @map("envelope_data")
-  repPeaks      Json?         @map("rep_peaks")
+  envelopeData  Json          @map("envelope_data")
+  envelopeBase  Float         @map("envelope_base")
+  repPeaks      Json          @map("rep_peaks")
   notes         String?
   createdAt     DateTime      @default(now()) @map("created_at")
   @@index([userId])

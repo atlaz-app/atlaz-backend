@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsOptional, IsNumber, IsEnum, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsNumber, IsEnum, IsString, IsArray } from 'class-validator';
 import { TrackerMode, TrackerMuscle, TrackerVisual } from 'src/shared/enums';
 
 export class CreateTraceDto {
@@ -27,15 +27,17 @@ export class CreateTraceDto {
   @IsNumber()
   effectiveness: number;
 
-  @IsOptional()
-  envelopeData?: number[];
+  @IsNumber()
+  envelopeBase: number;
 
-  @IsOptional()
-  repPeaks?: number[];
+  @IsArray()
+  envelopeData: number[];
+
+  @IsArray()
+  repPeaks: number[];
 
   @IsInt()
-  @IsOptional()
-  duration?: number;
+  duration: number;
 
   @IsString()
   @IsOptional()

@@ -24,10 +24,11 @@ export class TraceService {
         totalReps: dto.totalReps,
         effectiveReps: dto.effectiveReps,
         effectiveness: dto.effectiveness,
-        peakIntensity: peak,
-        avgIntensity: avg,
-        envelopeData: dto.envelopeData ? JSON.stringify(dto.envelopeData) : null,
-        repPeaks: dto.repPeaks ? JSON.stringify(dto.repPeaks) : null,
+        peakIntensity: peak || null,
+        avgIntensity: avg || null,
+        envelopeBase: dto.envelopeBase,
+        envelopeData: JSON.stringify(dto.envelopeData),
+        repPeaks: JSON.stringify(dto.repPeaks),
         notes: dto.notes,
       },
     });
@@ -57,6 +58,11 @@ export class TraceService {
         envelopeData: true,
         repPeaks: true,
         createdAt: true,
+        preset: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
   }

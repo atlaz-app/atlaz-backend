@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { CreateTraceDto } from './trace.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -58,6 +58,7 @@ export class TraceService {
         envelopeData: true,
         repPeaks: true,
         createdAt: true,
+        notes: true,
         preset: {
           select: {
             name: true,
@@ -65,5 +66,37 @@ export class TraceService {
         },
       },
     });
+  }
+
+  async getTraceById(userId: number, traceId: number) {
+    const trace = await this.prisma.trace.findFirst({
+      where: {
+        id: traceId,
+        userId,
+      },
+      select: {
+        id: true,
+        presetId: true,
+        duration: true,
+        muscle: true,
+        mode: true,
+        visual: true,
+        videoPath: true,
+        totalReps: true,
+        effectiveReps: true,
+        effectiveness: true,
+        peakIntensity: true,
+        avgIntensity: true,
+        envelopeData: true,
+        repPeaks: true,
+        createdAt: true,
+      },
+    });
+
+    if (!trace) {
+      throw new NotFoundException(`Trace with ID ${traceId} not found or not accessible`);
+    }
+
+    return trace;
   }
 }

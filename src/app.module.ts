@@ -9,6 +9,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 import { TraceModule } from './trace/trace.module';
 import { PresetModule } from './preset/preset.module';
+import { UploadthingModule } from './uploadthing/uploadthing.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PresetModule } from './preset/preset.module';
     UserModule,
     AuthModule,
     AiModule,
+    UploadthingModule,
     MailModule,
     ConfigModule.forRoot({
       isGlobal: true,

@@ -31,10 +31,11 @@ export class CreateTraceDto {
   envelopeBase: number;
 
   @IsArray()
-  envelopeData: number[];
-
-  @IsArray()
-  repPeaks: number[];
+  envelopeData: {
+    position: string;
+    value: number;
+    timestamp: number;
+  }[];
 
   @IsInt()
   duration: number;
